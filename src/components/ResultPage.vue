@@ -1,17 +1,17 @@
 <template>
   <main class="page result" v-if="result">
     <div class="scan-card">
-      <div class="scanline"></div>
       <div class="scan-head">
-        <span class="scan-tag">DETECTING…</span>
+        <span class="scan-tag">FINAL REPORT / 01</span>
         <span class="conf">置信度 {{ result.confidence }}%</span>
       </div>
 
-      <div class="tier-icon">{{ result.tier.icon }}</div>
+      <div class="score-context">AI 嘉豪浓度</div>
       <div class="big-score">
         <span class="num" ref="scoreRef">{{ displayScore }}</span>
         <span class="pct">%</span>
       </div>
+      <div class="tier-icon">{{ result.tier.icon }}</div>
       <div class="tier-title">{{ result.tier.title }}</div>
       <p class="tier-line">{{ result.tierLine }}</p>
 
@@ -21,13 +21,13 @@
     </div>
 
     <section class="type-card">
-      <div class="type-code">{{ result.type.code }}</div>
+      <div class="type-head"><span>PERSONALITY TYPE</span><strong>{{ result.type.code }}</strong></div>
       <div class="type-title">{{ result.type.title }}</div>
       <p class="type-desc">{{ result.type.desc }}</p>
     </section>
 
     <section class="dims">
-      <h3 class="sec-title">维度拆解</h3>
+      <div class="section-heading"><span>02 / PROFILE</span><h3 class="sec-title">维度拆解</h3></div>
       <div v-for="d in result.dims" :key="d.key" class="dim-row">
         <div class="dim-name">{{ d.name }}</div>
         <div class="dim-bars">
@@ -49,7 +49,7 @@
     </section>
 
     <section v-if="result.achievements.length" class="ach">
-      <h3 class="sec-title">成就解锁</h3>
+      <div class="section-heading"><span>03 / UNLOCKED</span><h3 class="sec-title">成就解锁</h3></div>
       <div v-for="a in result.achievements" :key="a.id" class="ach-item">
         <span class="ach-icon">{{ a.icon }}</span>
         <div>
@@ -60,7 +60,7 @@
     </section>
 
     <section class="share">
-      <h3 class="sec-title">分享你的浓度</h3>
+      <div class="section-heading"><span>04 / SHARE</span><h3 class="sec-title">分享你的浓度</h3></div>
       <ShareCard :result="result" />
       <div class="btn-row">
         <button class="btn primary" @click="$emit('resample')">换一批题再测</button>

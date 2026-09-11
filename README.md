@@ -27,6 +27,9 @@ npm run dev      # 开发预览
 npm run build    # 生产构建
 ```
 
+开发时请访问终端输出的本地地址（通常是 `http://localhost:5173`），不要直接双击项目根目录的 `index.html`。
+如果需要脱离开发服务器运行，请先执行 `npm run build`，再直接打开 `dist/index.html`。
+
 ## 项目结构
 
 ```

@@ -1,29 +1,38 @@
 <template>
   <main class="page quiz">
     <header class="quiz-top">
-      <div class="counter">
-        第 <b>{{ current + 1 }}</b> / {{ quiz.quiz.value.length }} 题
+      <div class="quiz-brand">
+        <span class="brand-mark">A</span>
+        <div><strong>AI 嘉豪实验室</strong><small>PERSONALITY CHECK</small></div>
       </div>
-      <div class="progress">
-        <div class="progress-fill" :style="{ width: quiz.progress.value + '%' }"></div>
+      <div class="quiz-progress">
+        <div class="progress-meta" aria-live="polite">
+          <span>QUESTION <b>{{ String(current + 1).padStart(2, '0') }}</b> / {{ String(quiz.quiz.value.length).padStart(2, '0') }}</span>
+          <span>{{ quiz.answeredCount.value }} 已完成</span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill" :style="{ width: quiz.progress.value + '%' }"></div>
+        </div>
       </div>
     </header>
 
     <transition name="slide" mode="out-in">
       <div :key="current" class="q-card">
-        <div class="q-module">{{ moduleName }}</div>
+        <div class="q-kicker"><span class="q-index">Q{{ String(current + 1).padStart(2, '0') }}</span><span class="q-module">{{ moduleName }}</span></div>
         <h2 class="q-text">{{ q.text }}</h2>
-        <div class="options">
+        <div class="options" role="radiogroup" aria-label="请选择最符合你的选项">
           <button
             v-for="(opt, i) in q.options"
             :key="i"
             class="option"
             :class="{ selected: selected === i, answered: selected !== -1 && selected !== i }"
+            role="radio"
+            :aria-checked="selected === i"
             @click="quiz.select(i)"
           >
             <span class="opt-tag">{{ 'ABCD'[i] }}</span>
             <span class="opt-text">{{ opt.text }}</span>
-            <span v-if="selected === i" class="opt-check">✓</span>
+            <span class="opt-check" aria-hidden="true">{{ selected === i ? '✓' : '' }}</span>
           </button>
         </div>
       </div>
@@ -41,7 +50,7 @@
 
     <div class="meter" :class="'tone-' + quiz.meter.value.tone">
       <div class="meter-head">
-        <span class="meter-title">▚ 嘉豪探测仪</span>
+        <span class="meter-title">嘉豪信号</span>
         <span class="meter-label">{{ quiz.meter.value.label }}</span>
         <span class="meter-pct">{{ quiz.meter.value.pct }}%</span>
       </div>

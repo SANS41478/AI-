@@ -1,6 +1,6 @@
 <template>
   <div class="share-wrap">
-    <canvas ref="canvasRef" :width="W" :height="H" class="share-canvas"></canvas>
+    <canvas ref="canvasRef" :width="W" :height="H" class="share-canvas" role="img" aria-label="AI嘉豪浓度检测报告分享卡片"></canvas>
     <button class="btn primary small" @click="download">保存图片</button>
   </div>
 </template>
@@ -36,18 +36,18 @@ function draw() {
 
   // 背景渐变
   const bg = ctx.createLinearGradient(0, 0, 0, H)
-  bg.addColorStop(0, '#070a12')
-  bg.addColorStop(0.5, '#0d1424')
-  bg.addColorStop(1, '#111c33')
+  bg.addColorStop(0, '#0b0e12')
+  bg.addColorStop(0.55, '#12181f')
+  bg.addColorStop(1, '#182129')
   ctx.fillStyle = bg
   ctx.fillRect(0, 0, W, H)
 
-  // 扫描线纹理
-  ctx.fillStyle = 'rgba(0,255,150,0.04)'
-  for (let y = 0; y < H; y += 6) ctx.fillRect(0, y, W, 2)
+  // 轻微纸张纹理
+  ctx.fillStyle = 'rgba(255,255,255,0.025)'
+  for (let y = 0; y < H; y += 8) ctx.fillRect(0, y, W, 1)
 
   // 四角装饰点阵
-  ctx.fillStyle = 'rgba(0,255,150,0.5)'
+  ctx.fillStyle = 'rgba(167,232,207,0.62)'
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
       ctx.beginPath()
@@ -57,30 +57,30 @@ function draw() {
   }
 
   // 顶部标题
-  ctx.fillStyle = '#00ff96'
+  ctx.fillStyle = '#a7e8cf'
   ctx.font = 'bold 34px "Microsoft YaHei", sans-serif'
   ctx.textAlign = 'center'
   ctx.fillText('AI嘉豪浓度测试', W / 2, 90)
 
-  ctx.fillStyle = 'rgba(255,255,255,0.5)'
+  ctx.fillStyle = 'rgba(244,246,245,0.5)'
   ctx.font = '24px "Microsoft YaHei", sans-serif'
   ctx.fillText('— 检测报告 —', W / 2, 130)
 
   // 分数
-  ctx.shadowColor = '#00ff96'
+  ctx.shadowColor = '#a7e8cf'
   ctx.shadowBlur = 40
-  ctx.fillStyle = '#00ff96'
+  ctx.fillStyle = '#a7e8cf'
   ctx.font = 'bold 200px "Microsoft YaHei", sans-serif'
   ctx.fillText(r.concentration + '%', W / 2, 380)
   ctx.shadowBlur = 0
 
   // 段位称号
-  ctx.fillStyle = '#ffffff'
+  ctx.fillStyle = '#f4f6f5'
   ctx.font = 'bold 44px "Microsoft YaHei", sans-serif'
   ctx.fillText(r.tier.icon + ' ' + r.tier.title, W / 2, 460)
 
   // 分隔线
-  ctx.strokeStyle = 'rgba(0,255,150,0.35)'
+  ctx.strokeStyle = 'rgba(167,232,207,0.35)'
   ctx.lineWidth = 2
   ctx.beginPath()
   ctx.moveTo(120, 520)
@@ -88,7 +88,7 @@ function draw() {
   ctx.stroke()
 
   // 类型
-  ctx.fillStyle = '#00d4ff'
+  ctx.fillStyle = '#a7e8cf'
   ctx.font = 'bold 30px "Microsoft YaHei", sans-serif'
   ctx.fillText('类型 · ' + r.type.code + ' 「' + r.type.title + '」', W / 2, 580)
 
@@ -97,14 +97,14 @@ function draw() {
   const cardY = 640
   const cardW = W - 180
   const cardH = 190
-  ctx.fillStyle = 'rgba(0,255,150,0.08)'
+  ctx.fillStyle = 'rgba(167,232,207,0.09)'
   rr(ctx, cardX, cardY, cardW, cardH, 20)
   ctx.fill()
-  ctx.strokeStyle = 'rgba(0,255,150,0.4)'
+  ctx.strokeStyle = 'rgba(167,232,207,0.4)'
   ctx.lineWidth = 1.5
   ctx.stroke()
 
-  ctx.fillStyle = 'rgba(255,255,255,0.85)'
+  ctx.fillStyle = 'rgba(244,246,245,0.85)'
   ctx.font = '28px "Microsoft YaHei", sans-serif'
   const lines = wrapText(ctx, r.type.desc, cardW - 60)
   const startY = cardY + 60
@@ -113,7 +113,7 @@ function draw() {
   })
 
   // 底部文案
-  ctx.fillStyle = '#00ff96'
+  ctx.fillStyle = '#a7e8cf'
   ctx.font = '26px "Microsoft YaHei", sans-serif'
   ctx.fillText('「' + tagline + '」', W / 2, 890)
 
